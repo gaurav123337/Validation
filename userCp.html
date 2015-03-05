@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Change User Password</title>
+
+    <!--<link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>-->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="../styles/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="../bower_components/custom.css" media="screen" type="text/css" />
+
+</head>
+
+<body>
+
+<div class="login-card">
+    <h4>Change Password for User: <span id="userName">  </span></h4><br>
+    <form>
+        <div class="">
+            <input type="password" name="oldPwd" placeholder="Old Password" class="oldPwd" id="oldPwd" onfocus="handleEvent(this,'required')"/>
+        </div>
+        <div>
+            <input type="password" name="newPass" placeholder="New Password" class="newPwd" id="newPwd" onfocus="handleEvent(this,'lengthCheck')"/>
+        </div>
+        <div>
+            <input type="password" name="confPass" placeholder="Confirm Password" class="cnrfPwd" id="cnrfPwd" onfocus="handleEvent(this,'required')"/>
+        </div>
+        <div>
+            <a class="btn btn-primary" href="#" role="button" onclick="redirect('../')">login</a>
+        </div>
+        <!--<input type="submit" name="changePassword" class="login login-submit" value="change Password">-->
+        <div id="error"> </div>
+    </form>
+    <!--<div id="error"><img src="https://dl.dropboxusercontent.com/u/23299152/Delete-icon.png" /> Your caps-lock is on.</div>-->
+    <div id="error"> </div>
+
+    <!--<div class="login-help">
+      <a href="#">Register</a> • <a href="#">Forgot Password</a>
+    </div>-->
+</div>
+ <script src="../bower_components/jquery/dist/jQuery1.11.2.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--For Validation-->
+    <script src="../scripts/validation.js"></script>
+    <!--For serverCall-->
+    <script src="../scripts/popUp.js"></script>
+    <!--For pop up-->
+    <script src="../scripts/serverCall.js"></script>
+<!--custom js-->
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    })
+
+      
+
+
+    /*Implement more than one listener on single event*/
+    function handleEvent(obj,action){
+        $("#"+obj.id).bind({
+            blur: function() {
+                if($(this).val().trim() == ""){
+                    validateMe(this,'required');
+                }
+                else{
+                    //validateMe(this,'ipCheck');
+                    if($(this).val().trim() !== "" && action == "required") {
+                        validateMe(this,'required');
+                    }
+                    else{
+                        validateMe(this,action);
+                    }
+                }
+            }
+        });
+    }
+
+    /*Implement for validation*/
+    function validateMe(obj,action){
+        if(action == "required"){
+            $("#"+obj.id).validation("required","Please fill it!");
+        }
+        if(action == "lengthCheck"){
+            $("#"+obj.id).validation("lengthCheck","Length should not be less than 7");
+        }
+    }
+</script>
+
+</body>
+
+</html>

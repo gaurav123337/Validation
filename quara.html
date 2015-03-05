@@ -1,0 +1,52 @@
+<html>
+	<head>
+		
+    <style type="text/css">
+      .container123{
+        width:14%;
+        float: left;
+      }
+      .message{
+        color: red;
+      display: inline;
+      float: right;
+      position: absolute;
+      margin: 3px;
+      }
+    </style>
+		</head>
+		<body>
+	<div class="container123">
+		<input type="text" class="test" id="6"  onfocus="validateMe(this);"/>
+		
+    <input type="text" class="test" id="1"  onfocus="validateMe(this);"/>
+    <input type="text"  id="2" onfocus="validateMe(this);"/>
+    <input type="text"  id="3" onfocus="validateMe(this);"/>
+    <input type="text"  id="4" onfocus="validateMe(this);"/>
+    <input type="text"  id="5" onfocus="validateMe(this);"/>
+		
+		<input type="button" class="test133" value="test"/>
+	</div>
+
+
+<script src="../bower_components/jquery/dist/jQuery1.11.2.js"></script>
+
+    <script type="text/javascript">  
+      /*Implement for validation*/
+      function validateMe(obj,action){
+       
+        if(obj.value.trim() == ""){
+           var html ="";
+            html = "<p class='message' style='color:red;display:inline;float:right;'>"                     
+            html += "Required";
+                
+            html += "</p>";
+
+           $("#"+obj.id).after(html);
+           //obj.insertBefore(html);
+        }
+      }
+    </script>
+
+</body>
+</html>

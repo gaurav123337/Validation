@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+
+    <title>CC DB Add</title>
+    <!--<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" media="screen" type="text/css" />-->
+    
+    <link rel="stylesheet" href="../bower_components/custom.css" media="screen" type="text/css" />
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+<nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">CC Management Center</a>
+        </div>
+        <span class="logout">
+              <a class="btn btn-danger" href="../index.html" role="button">logout</a>
+          </span>
+
+      </div>
+    </nav>
+    <div class="container">
+
+     <form class="form-horizontal" id="dbConnection">
+    <div class="ccHeader ">
+      <h3>Add Eva Database Connection</h3>
+
+    </div>
+    <hr/>
+    <div class="form-group">
+      <label for="inputEmail3" class="col-sm-2 control-label">Database Tag</label>
+      <div class="col-sm-10">
+        <input type="text" class="" id="dbTag" placeholder="Database Tag" value="EVA_DB" disabled>
+      </div>
+    </div>
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">DataBase IP</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="dbipAddr" placeholder="DataBase IP" onfocus="handleEvent(this,'ipCheck')" onkeypress="return restrictCharacters(this, event, integerOnly);"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">Port</label>
+    <div class="col-sm-10">
+      <!--<input type="text" class="form-control" id="port" placeholder="Port" onkeypress="return restrictCharacters(this, event, integerOnly);" onchange="validateMe(this,'portRange')" >-->
+      <input type="text" class="form-control" id="port" placeholder="Port" onkeypress="return restrictCharacters(this, event, integerOnly);" onfocus="handleEvent(this,'portRange')" />
+
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">Schema ID</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="sid" placeholder="Schema ID"  onfocus="handleEvent(this,'required')">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">User</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="user" placeholder="User"  onfocus="handleEvent(this,'required')">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="pwd" placeholder="Password"  onfocus="handleEvent(this,'required')">
+    </div>
+  </div>
+  <!--<div class="form-group">
+  <br/>
+    <label for="inputEmail3" class="col-sm-2 control-label">Machine IP</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="machineIp" placeholder="Machine IP">
+    </div>
+  </div>-->
+  <!--<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+     --<button type="button" class="btn btn-info" id="testConnection" onclick="checkDbConnection()">Test Connection</button>--
+      <a href="" id="testConnection" class="btn btn-info" onclick="redirect('../','','testc')">Test Connection</a>   
+      <a href="" id="testConnection" class="btn btn-info" onclick="redirectTest()">Test Connection</a>   
+      <button type="submit" class="btn btn-primary" onclick="redirect('../','','savec')">Save Connection</button>
+      <button onclick="myFunction()">Replace document</button>
+    </div>
+  </div>-->
+
+</form>
+<!--For displaying message-->
+<div class="message"></div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">     
+      <button  class="btn btn-info" onclick="redirect('../','','testc')">Test Connection</button>
+      
+      <button  class="btn btn-primary savec" onclick="redirect('../','','savec')" disabled>Save Connection</button>
+      <button  class="btn btn-info" onclick="reset()">Reset</button>
+     <!-- <button onclick="myFunction()">Replace document</button>-->
+    </div>
+  </div>
+      <div id="blanket" style="display:none;"></div>
+      <div id="popUpDiv" style="display:none;">
+
+        <a href="#" id="closeLink" ></a>
+        <p>Test connection successfully!</p>
+      </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
+
+    <script src="../bower_components/jquery/dist/jQuery1.11.2.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--For Validation-->
+    <script src="../scripts/validation.js"></script>
+    <!--For serverCall-->
+    <script src="../scripts/popUp.js"></script>
+    <!--For pop up-->
+    <script src="../scripts/serverCall.js"></script>
+
+    <script type="text/javascript">
+
+      $(document).ready( function() {        
+      });
+
+      /* code from qodo.co.uk */
+      // create as many regular expressions here as you need:
+      var digitsOnly = /[1234567890]/g;  /^(\d+)$/
+      var integerOnly = /[0-9\.]/g;
+      var alphaOnly = /[A-Za-z]/g;
+      /*Function for restricting keywords*/
+      function restrictCharacters(myfield, e, restrictionType) {
+        if (!e) var e = window.event
+        if (e.keyCode) code = e.keyCode;
+        else if (e.which) code = e.which;
+        var character = String.fromCharCode(code);
+
+        // if they pressed esc... remove focus from field...
+        if (code==27) { this.blur(); return false; }
+
+        // ignore if they are press other keys
+        // strange because code: 39 is the down key AND ' key...
+        // and DEL also equals .
+        //if (!e.ctrlKey && code!=9 && code!=8 && code!=36 && code!=37 && code!=38 && (code!=39 || (code==39 && character=="'")) && code!=40) {
+        if (!e.ctrlKey && code!=9 && code!=8 &&  (code!=39 || (code==39 && character=="'"))) {
+          if (character.match(restrictionType)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+
+      /*Implement more than one listener on single event*/
+        function handleEvent(obj,action){
+          $("#"+obj.id).bind({            
+            blur: function() {
+              if($(this).val().trim() == ""){
+                validateMe(this,'required');
+              }
+              else{
+                //validateMe(this,'ipCheck');
+                if($(this).val().trim() !== "" && action == "required") {
+                  validateMe(this,'required');
+                }
+                else{
+                  validateMe(this,action);
+                }
+              }
+            }
+          });
+      }
+
+      /*Implement for validation*/
+      function validateMe(obj,action){
+        if(action == "ipCheck"){
+          $("#"+obj.id).validation("ipCheck","Invalid IP address!");
+        }
+        if(action == "numeric"){
+          $("#"+obj.id).validation("numeric","Only Numeric");
+        }
+        if(action == "portRange"){
+          $("#"+obj.id).validation("portRange","Invalid Port!");
+        }
+        if(action == "specialCharCheck"){
+          $("#"+obj.id).validation("specialCharCheck","");
+        }
+        if(action == "required"){
+          $("#"+obj.id).validation("required","Please fill it!");
+        }
+      
+      }
+
+      /*Function for making server calls*/
+      function redirect(url, callback,action){
+
+        var tablinks = document.querySelector('#dbConnection').getElementsByTagName('input');      
+        var allValues = [];
+        for (var i = 0, j = tablinks.length; i < j; i++) {
+            allValues[i] = document.getElementById(tablinks[i].id).value;
+        }
+       // var jsonVal = { json: "{action : testc, dbip:" + allValues[1]+ ", dbport: \""+allValues[2]+"\", sid :" +allValues[3]+", user :"+allValues[4]+", pwd :"+allValues[5]+"}" };
+        var jsonVal = { json: "{action :" + action +", dbip:" + allValues[1]+ ", dbport: \""+allValues[2]+"\", sid :" +allValues[3]+", user :"+allValues[4]+", pwd :"+allValues[5]+"}" };
+
+        var jsonValTest = { json: "{action :" + "'"+action+"'" +"}" };
+        eval('var obj='+jsonValTest.json);
+
+        verifyDb(jsonVal, url, callback).done(function(resp){
+
+            ccdb_verify_db_resp = JSON.parse(resp);
+            //console.log(ccdb_verify_db_resp,"db result");
+
+            if (ccdb_verify_db_resp.result == "FAILED") {
+              var message = ccdb_verify_db_resp.message;
+                //popup('popUpDiv',message);
+                $(".message").css('border','1px solid red');
+                $(".message").text(message);
+                // show message
+            } else {
+              var message = ccdb_verify_db_resp.message;
+              //popup('popUpDiv',message);
+                // show message
+                if(obj.action == "testc"){
+                  $(".message").css('border','1px solid green');
+                  $(".message").text(message);
+                  //$(".savec").css('visibility','visible');
+                  $(".savec").attr('disabled',false);
+                 }
+                 else{
+                  location.replace("dblist.html");
+                 }
+               
+            }
+        });
+      }
+      function redirectTest(){
+         //location.replace.href ="ccDbForm.html"
+          location.replace("http://www.w3schools.com")
+      }
+      function reset() {
+        //location.replace("http://www.w3schools.com")
+        document.querySelector("#dbConnection").reset();
+         $(".savec").attr('disabled',true);
+         //$(".message").css('display','none');
+         $(".message").css('visibility','hidden');
+      }
+    </script>
+
+  </body>
+</html>

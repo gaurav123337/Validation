@@ -1,0 +1,78 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="../bower_components/custom.css" media="screen" type="text/css" />
+		</head>
+		<body>
+	<div class="container123">
+		<input type="text" class="test"  />
+		<!--<input type="text" class="test"  onfocus="handleEvent(this,'required')"/>-->
+		<div class="col-sm-10">
+      		<input type="text" class="form-control" id="user" placeholder="User"  onfocus="handleEvent(this,'required')">
+    </div>
+		<input type="button" class="test" value="iiii"/>
+	</div>
+
+<div class="xys">
+	<div class="container123">
+		<input type="text" class="test"  />
+		<!--<input type="text" class="test"  onfocus="handleEvent(this,'required')"/>-->
+		<div class="col-sm-10">
+      <input type="text" class="form-control" id="user123" placeholder="User"  onfocus="handleEvent(this,'required')">
+    </div>
+		<input type="button" class="test" value="iiii"/>
+	</div>
+</div>
+<script src="../bower_components/jquery/dist/jQuery1.11.2.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+<!--For Validation-->
+    <script src="../scripts/validation.js"></script>
+    <script>
+     /*Implement more than one listener on single event*/
+        function handleEvent(obj,action){
+        	//validateMe(this,'required');
+          $("#"+obj.id).bind({
+
+            blur: function() {
+            	console.log($(this).val(),"data");
+              if($(this).val().trim() == ""){
+                validateMe(this,'required');
+              }
+              else{
+                //validateMe(this,'ipCheck');
+                console.log($(this).val(),"data");
+                if($(this).val().trim() !== "" && action == "required") {
+                  validateMe(this,'required');
+                }
+                else{
+                  validateMe(this,action);
+                }
+              }
+            }
+          });
+      }
+
+      /*Implement for validation*/
+      function validateMe(obj,action){
+        if(action == "ipCheck"){
+          $("#"+obj.id).validation("ipCheck","Invalid IP address!");
+        }
+        if(action == "numeric"){
+          $("#"+obj.id).validation("numeric","Only Numeric");
+        }
+        if(action == "portRange"){
+          $("#"+obj.id).validation("portRange","Invalid Port!");
+        }
+        if(action == "specialCharCheck"){
+          $("#"+obj.id).validation("specialCharCheck","");
+        }
+        if(action == "required"){
+          $("#"+obj.id).validation("required","Please fill it!");
+        }
+      
+      }
+    </script>
+
+</body>
+</html>

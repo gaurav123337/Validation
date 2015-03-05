@@ -1,0 +1,18 @@
+[
+    {
+        "IP":"192.168.0.144",
+        "Port":9000,
+        "User":"Aditya",
+        "SID":"xe"
+    },{
+        "IP":"192.168.0.156",
+        "Port":8000,
+        "User":"Lovish",
+        "SID":"cxpsorcl"
+    },{
+        "IP":"192.168.0.140",
+        "Port":5000,
+        "User":"Gaurav",
+        "SID":"cemdb"
+    }
+]
